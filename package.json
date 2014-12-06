@@ -1,13 +1,13 @@
 {
   "name": "biojs-io-matrix",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parses 2D matrices (e.g. PAM)",
   "main": "index.js",
   "scripts": {
     "test": "gulp test"
   },
   "author": "greenify",
-  "keywords": ["biojs"],
+  "keywords": ["biojs", "PAM", "matrix" ],
   "license": "MIT",
   "devDependencies": {
     "chai": "^1.10.0",
