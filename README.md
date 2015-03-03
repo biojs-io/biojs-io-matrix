@@ -10,39 +10,62 @@ biojs-io-matrix
 Install the module with: `npm install biojs-io-matrix`
 
 ```javascript
-var Reader = require('biojs-io-matrix');
+var MParser  = require('biojs-io-matrix');
 ```
-## B) Read a entire file
+### `read(url)`
+
+Parses an url an calls your `parse` method with the returned body.
 
 ```
-var matrix = Reader("A 1\nB 1 2");
+MParser.read("https://cdn.rawgit.com/greenify/biojs-io-matrix/master/test/data/pam_250", function(err, model) {
+	// model is the parsed url
+});
+```
+
+If callback is undefined, `read` returns a promise.
+
+```
+var p = MParser.read("https://cdn.rawgit.com/greenify/biojs-io-matrix/master/test/data/pam_250");
+// ...
+p.then(function(model) {
+	// model is the parsed url
+}, function(err){
+	console.error("err happened during downloading", err);
+});
+```
+
+### Read a entire file
+
+```
+var matrix = MParser.parse("A 1\nB 1 2");
 > { A: { A: 1, B: 1 },
   B: { A: 1, B: 2 } }
 ```
 
-## B) Line by line
+### Line by line
 
 ```
-var reader = new Reader();
-reader.readLine("A 1");
-reader.readLine("B 2 3");
-var matrix = reader.buildMatrix();
+var mParser = new MParser();
+mParser.parseLine("A 1");
+mParser.parseLine("B 2 3");
+var matrix = mParser.buildMatrix();
 ```
 
-## C) Save a matrix
+### Save a matrix
 
 
 ```
-var matrix = Reader("A 1\nB 1 2");
-Reader.toString(matrix);
+var matrix = MParser("A 1\nB 1 2");
+var out = mParser.export(matrix);
+> 'A\t1\nB\t1\t2'
 ```
 
 Or you can use objects
 
 ```
-var matrix = new Reader("A 1\nB 1 2");
+var matrix = new MParser("A 1\nB 1 2");
 matrix.buildMatrix(); \\ returns the 2D array
-matrix.toString();
+var out = matrix.export();
 > 'A\t1\nB\t1\t2'
 ```
 
